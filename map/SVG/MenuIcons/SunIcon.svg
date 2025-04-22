@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="39"
+   height="39"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg9"
+   sodipodi:docname="sunIcon.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview9"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="7.5062105"
+     inkscape:cx="-6.9275969"
+     inkscape:cy="21.715352"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg9" />
+  <defs
+     id="defs2">
+    <filter
+       id="glow"
+       x="-0.34003757"
+       y="-0.34003757"
+       width="1.6800751"
+       height="1.6800751">
+      <feGaussianBlur
+         stdDeviation="1.6056607"
+         result="coloredBlur"
+         id="feGaussianBlur1" />
+      <feMerge
+         id="feMerge2">
+        <feMergeNode
+           in="coloredBlur"
+           id="feMergeNode1" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode2" />
+      </feMerge>
+    </filter>
+    <filter
+       id="glow-2"
+       x="-0.34514837"
+       y="-0.34514837"
+       width="1.6902967"
+       height="1.6902967">
+      <feGaussianBlur
+         stdDeviation="1.9884892"
+         result="coloredBlur"
+         id="feGaussianBlur1-7" />
+      <feMerge
+         id="feMerge2-6">
+        <feMergeNode
+           in="coloredBlur"
+           id="feMergeNode1-1" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode2-4" />
+      </feMerge>
+    </filter>
+    <filter
+       id="glow-9"
+       x="-0.042068614"
+       y="-0.042068614"
+       width="1.0841372"
+       height="1.0841372">
+      <feGaussianBlur
+         stdDeviation="0.14054661"
+         result="coloredBlur"
+         id="feGaussianBlur1-5" />
+      <feMerge
+         id="feMerge2-4">
+        <feMergeNode
+           in="coloredBlur"
+           id="feMergeNode1-3" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode2-1" />
+      </feMerge>
+    </filter>
+  </defs>
+  <circle
+     cx="12"
+     cy="11.988201"
+     stroke="#d08821"
+     stroke-width="1.5"
+     fill="none"
+     filter="url(#glow)"
+     id="circle2"
+     r="6.7692308"
+     style="filter:url(#glow)"
+     transform="matrix(1.0015105,0,0,1.0009172,-0.0127461,-5.6430741e-4)" />
+  <line
+     x1="12.065496"
+     y1="0.028985504"
+     x2="12.065496"
+     y2="4.0289855"
+     stroke="#d08821"
+     stroke-width="1.5"
+     id="line2" />
+  <line
+     x1="12.057971"
+     y1="19.974638"
+     x2="12.057971"
+     y2="23.974638"
+     stroke="#d08821"
+     stroke-width="1.5"
+     id="line3" />
+  <line
+     x1="0.020495854"
+     y1="12.072464"
+     x2="4.0204954"
+     y2="12.072464"
+     stroke="#d08821"
+     stroke-width="1.5"
+     id="line4" />
+  <line
+     x1="19.94203"
+     y1="12.054"
+     x2="23.94203"
+     y2="12.054"
+     stroke="#d08821"
+     stroke-width="1.5"
+     id="line5" />
+  <line
+     x1="3.3988557"
+     y1="3.2851841"
+     x2="5.9081922"
+     y2="5.7751541"
+     stroke="#d08821"
+     stroke-width="1.49978"
+     id="line6" />
+  <line
+     x1="18.181732"
+     y1="18.142958"
+     x2="20.691067"
+     y2="20.632927"
+     stroke="#d08821"
+     stroke-width="1.49978"
+     id="line7" />
+  <line
+     x1="3.3989632"
+     y1="20.632734"
+     x2="5.9083004"
+     y2="18.142765"
+     stroke="#d08821"
+     stroke-width="1.49978"
+     id="line8" />
+  <line
+     x1="18.181679"
+     y1="5.774888"
+     x2="20.691013"
+     y2="3.2849176"
+     stroke="#d08821"
+     stroke-width="1.49978"
+     id="line9" />
+</svg>

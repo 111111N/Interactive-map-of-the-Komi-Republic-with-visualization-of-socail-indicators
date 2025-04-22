@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="39"
+   height="39"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="CloseMenuIconNight.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="8"
+     inkscape:cx="7.375"
+     inkscape:cy="15"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <rect
+     x="2.0384614"
+     y="4.1098156"
+     width="20"
+     height="2"
+     fill="#edc5ab"
+     stroke="#111111"
+     stroke-width="1"
+     id="rect1"
+     style="fill:none;fill-opacity:1;stroke:#d08821;stroke-opacity:0.33000001" />
+  <rect
+     x="2.0377066"
+     y="10.878291"
+     width="19.924587"
+     height="2.0015104"
+     fill="#edc5ab"
+     stroke="#111111"
+     stroke-width="0.99849"
+     id="rect2"
+     style="fill:none;fill-opacity:1;stroke:#d08821;stroke-opacity:0.33000001" />
+  <rect
+     x="2.0384614"
+     y="17.648277"
+     width="20"
+     height="2"
+     fill="#edc5ab"
+     stroke="#111111"
+     stroke-width="1"
+     id="rect3"
+     style="fill:none;fill-opacity:1;stroke:#d08821;stroke-opacity:0.33000001" />
+  <rect
+     x="-15.556123"
+     y="-18.206535"
+     width="26.259462"
+     height="2.7440662"
+     fill="#edc5ab"
+     stroke="#111111"
+     stroke-width="1.34216"
+     id="rect2-1"
+     transform="matrix(-0.77768793,0.62865052,-0.60082154,-0.79938318,0,0)"
+     style="fill:none;fill-opacity:1;stroke:#d08821;stroke-opacity:1" />
+</svg>
