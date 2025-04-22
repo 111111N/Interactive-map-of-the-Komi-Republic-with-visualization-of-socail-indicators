@@ -1,0 +1,1 @@
+# Interactive-map-of-the-Komi-Republic-with-visualization-of-socail-indicators
