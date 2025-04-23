@@ -1394,4 +1394,4 @@ loadDistrictMaps(colorSchemeDay);
 updateDistrictCenters();
 
 
-drawMap("../map/Geojson/Komi.geojson", "#37745B", "#8B9D77", 1);
+drawMap("https://github.com/111111N/Interactive-map-of-the-Komi-Republic-with-visualization-of-social-indicators/map/Geojson/Komi.geojson", "#37745B", "#8B9D77", 1);
