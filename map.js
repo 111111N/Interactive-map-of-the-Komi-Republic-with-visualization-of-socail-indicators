@@ -82,11 +82,11 @@ const districtCenters = {
 };
 
 const sunIcon = `<svg width="39" height="39" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-    <image href="/map/SVG/MenuButtons.svg" x="0" y="-48" width="336" height="96" />
+    <image href="map/SVG/MenuButtons.svg" x="0" y="-48" width="336" height="96" />
 </svg>`;
 
 const moonIcon = `<svg width="39" height="39" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-    <image href="/map/SVG/MenuButtons.svg" x="0" y="0" width="336" height="96" />
+    <image href="map/SVG/MenuButtons.svg" x="0" y="0" width="336" height="96" />
 </svg>`;
 
 let districtData = {};
@@ -164,11 +164,11 @@ themeButton.addEventListener("click", () => {
     themeButton.innerHTML = darkMode ? sunIcon : moonIcon;
     changeIconColor();
     if (darkMode){
-        drawMap("../map/GeoJSON/Komi.geojson", "#10133a", "#D08821", 1); // Цвет для темной темы
+        drawMap("map/GeoJSON/Komi.geojson", "#10133a", "#D08821", 1); // Цвет для темной темы
         loadDistrictMaps(colorSchemeNight)
     }
     else {
-        drawMap("../map/GeoJSON/Komi.geojson", "#37745B", "#8B9D77", 1);// Цвет для светлой темы
+        drawMap("map/GeoJSON/Komi.geojson", "#37745B", "#8B9D77", 1);// Цвет для светлой темы
         loadDistrictMaps(colorSchemeDay);
     }
     themeButton.color = darkMode ? "fff" : "#fff";
@@ -321,7 +321,7 @@ iconMenuButton.addEventListener("click", () => {
 function changeIconColor() {
     const makeIcon = (xOffset) => `
         <svg width="39" height="39" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <image href="/map/SVG/MenuButtons.svg" x="${xOffset}" y="${darkMode ? -48 : 0}" width="336" height="96" />
+            <image href="map/SVG/MenuButtons.svg" x="${xOffset}" y="${darkMode ? -48 : 0}" width="336" height="96" />
         </svg>
     `;
 
@@ -358,7 +358,7 @@ async function loadDistrictMaps(colorScheme) {
                 const cacheKey = `${district}${type}`;
                 if (!cachedData[cacheKey]) { // Загружаем только если нет в кэше
                     try {
-                        const response = await fetch(`../map/GeoJSON/${district}/${district}${type}.geojson`);
+                        const response = await fetch(`map/GeoJSON/${district}/${district}${type}.geojson`);
                         cachedData[cacheKey] = await response.json();
                     } catch (error) {
                         console.error(`Ошибка загрузки ${cacheKey}:`, error);
@@ -391,7 +391,7 @@ async function loadDistrictMaps(colorScheme) {
 async function updateDistrictCenters() {
     for (const district of districts) {
         try {
-            const response = await fetch(`../map/GeoJSON/${district}/${district}Borders.geojson`);
+            const response = await fetch(`map/GeoJSON/${district}/${district}Borders.geojson`);
             if (!response.ok) throw new Error(`Не удалось загрузить ${district}Borders.geojson`);
             
             const geojson = await response.json();
@@ -1394,4 +1394,4 @@ loadDistrictMaps(colorSchemeDay);
 updateDistrictCenters();
 
 
-drawMap("../map/GeoJSON/Komi.geojson", "#37745B", "#8B9D77", 1);
+drawMap("map/GeoJSON/Komi.geojson", "#37745B", "#8B9D77", 1);
