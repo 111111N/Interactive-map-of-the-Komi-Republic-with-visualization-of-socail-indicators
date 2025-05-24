@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="39"
+   height="39"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="MenuIconNight.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="15.012421"
+     inkscape:cx="12.389741"
+     inkscape:cy="14.987589"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3" />
+  <rect
+     x="2.1307693"
+     y="17.648308"
+     width="20"
+     height="2"
+     fill="#edc5ab"
+     stroke="#111111"
+     stroke-width="1"
+     id="rect3"
+     style="fill:none;stroke:#d08821;stroke-opacity:1" />
+  <rect
+     x="2.0384617"
+     y="4.1098461"
+     width="20"
+     height="2"
+     fill="#edc5ab"
+     stroke="#111111"
+     stroke-width="1"
+     id="rect1"
+     style="fill:none;fill-opacity:1;stroke:#d08821;stroke-opacity:1;stroke-linejoin:miter;paint-order:markers stroke fill" />
+  <rect
+     x="2.0377066"
+     y="10.878322"
+     width="19.924587"
+     height="2.0015104"
+     fill="#edc5ab"
+     stroke="#111111"
+     stroke-width="0.99849"
+     id="rect2"
+     style="fill:none;fill-opacity:1;stroke:#d08821;stroke-opacity:1" />
+</svg>

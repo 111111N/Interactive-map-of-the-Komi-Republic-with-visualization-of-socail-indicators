@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="39"
+   height="39"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="MonIcon.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="11.313709"
+     inkscape:cx="8.662058"
+     inkscape:cy="17.854446"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3" />
+  <ellipse
+     style="display:none;fill:#0000ab;fill-opacity:0.23676;stroke:none;stroke-width:4.44393;stroke-opacity:0"
+     id="path13"
+     cx="11.912031"
+     cy="11.939225"
+     rx="12.055824"
+     ry="11.865449" />
+  <ellipse
+     style="display:none;fill:#00ff00;fill-opacity:0.23676;stroke:none;stroke-width:4.44393;stroke-opacity:0"
+     id="path13-1"
+     cx="6.5173626"
+     cy="5.4039097"
+     rx="12.055824"
+     ry="11.865449" />
+  <path
+     d="M 22.010536,17.118641 C 24.78466,11.568463 22.814014,5.4384301 18.872423,2.7131504 c 0.95503,4.2295752 -0.168941,8.3699226 -3.502796,11.6757246 -2.880499,2.85626 -7.7541865,4.417567 -13.7528886,2.439509 1.9309335,3.890055 6.401821,6.359943 10.3645446,6.373791 3.962724,0.01385 7.953704,-1.979666 10.029253,-6.083534 z"
+     fill="#edc5ab"
+     stroke-width="1.29123"
+     stroke="#333"
+     id="path1"
+     style="fill:#edc5ab;fill-opacity:1;stroke:#333333;stroke-opacity:1"
+     sodipodi:nodetypes="ccscsc" />
+  <polygon
+     points="3.5,6 1,4 4,4 5,1 6,4 9,4 6.5,6 7.5,9 5,7 2.5,9 "
+     fill="#edc5ab"
+     stroke-width="0.7"
+     stroke="#333333"
+     transform="matrix(0.57438758,0,0,0.5395069,3.8169179,8.6384373)"
+     id="polygon1" />
+  <polygon
+     points="4,4 5,1 6,4 9,4 6.5,6 7.5,9 5,7 2.5,9 3.5,6 1,4 "
+     fill="#edc5ab"
+     stroke-width="0.7"
+     stroke="#333333"
+     transform="matrix(0.35768526,0,0,0.34766817,11.238343,4.2177197)"
+     id="polygon1-5" />
+  <polygon
+     points="3.5,6 1,4 4,4 5,1 6,4 9,4 6.5,6 7.5,9 5,7 2.5,9 "
+     fill="#edc5ab"
+     stroke-width="0.7"
+     stroke="#333333"
+     transform="matrix(0.26089248,0,0,0.24911787,12.476232,9.7505885)"
+     id="polygon3"
+     style="display:inline" />
+</svg>
