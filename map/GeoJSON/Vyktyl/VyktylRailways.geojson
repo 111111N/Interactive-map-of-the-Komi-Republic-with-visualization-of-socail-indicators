@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:423db365c875dfafd3f5e2ae4615060b943889faf9409c06c3ff466ffc04ac32
-size 175
+{"type":"FeatureCollection","name":"VyktylRailways","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"xy_coordinate_resolution":1e-15,"features":[]}

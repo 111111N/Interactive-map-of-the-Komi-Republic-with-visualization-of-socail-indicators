@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ab02258d9bbdc011f8b7376a97b28416a2da54a89c218fa29dffaba45f8a72a3
-size 851
+{"type":"FeatureCollection","name":"SysolskiiRailways","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"xy_coordinate_resolution":1e-15,"features":[{"type":"Feature","properties":{"osm_id":"1054560981","code":6106,"fclass":"narrow_gauge","name":"Сысольская УЖД","layer":1,"bridge":"T","tunnel":"F","tessellate":-1,"extrude":0,"visibility":-1,"_id":"relation/1082938","admin_leve":"6","boundary":"administrative","name_en":"Sysolsky District","name_ja":"スィソラ地区","name_ru":"Сысольский район","official_s":"ru:муниципальный район","population":"13165","populati_1":"2016","type":"boundary","wikidata":"Q1089781","wikipedia":"ru:Сысольский район"},"geometry":{"type":"MultiLineString","coordinates":[[[50.1091495,61.1446961],[50.1093547,61.1446048]]]}}]}
