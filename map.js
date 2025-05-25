@@ -396,7 +396,7 @@ async function loadDistrictMaps(district, colorScheme) {
         const cacheKey = `${district}${type}`;
         if (!cachedData[cacheKey]) {
             try {
-                const response = await fetch(`../map/GeoJSON/${district}/${district}${type}.geojson`);
+                const response = await fetch(`map/GeoJSON/${district}/${district}${type}.geojson`);
                 if (!response.ok) throw new Error(`Ошибка загрузки ${cacheKey}`);
                 cachedData[cacheKey] = await response.json();
             } catch (e) {
