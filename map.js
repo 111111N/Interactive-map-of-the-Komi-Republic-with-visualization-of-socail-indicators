@@ -181,13 +181,13 @@ themeButton.addEventListener("click", () => {
     if (darkMode){
         
         drawMap("map/GeoJSON/Komi.geojson", "#10133a", "#D08821", 1); // Цвет для темной темы
-        loadDistrictMaps(colorSchemeNight);
+        loadDistrictMaps(getClosestDistrict(), colorSchemeNight);
         spinner.classList.add('dark');
     }
     else {
         
         drawMap("map/GeoJSON/Komi.geojson", "#37745B", "#8B9D77", 1);// Цвет для светлой темы
-        loadDistrictMaps(colorSchemeDay);
+        loadDistrictMaps(getClosestDistrict(), colorSchemeDay);
         spinner.classList.remove('dark');
     }
     infoBox.style.display = "none";
