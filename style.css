@@ -48,12 +48,20 @@ body {
     z-index: 1000;
     font-size: 15px;
     user-select: none; 
+    background: #333;
+    color: #E7EAEF;
+    border: 2px solid #00000059;
+    box-shadow: inset 4px 0px #EDC5AB;
+    border-radius: 20px;
+    padding-left: 20px;
 }
 
-.tooltip {
-    background: black;
-    color: #E7EAEF;
+.author-box{
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 20px;
 }
+
 
 .info-box, #socialTab {
     position: fixed;
@@ -75,6 +83,7 @@ body {
     text-align: center;
     overflow-x: auto;
     height: 95.5%;
+    -webkit-text-stroke: 0.1px rgba(0, 0, 0, 0.597);
 }
 
 
@@ -86,19 +95,29 @@ body {
   
 #socialTab {
     width: 30%;
+    right: 0%;
+    max-width: 40%;
     color:rgba(255, 255, 245, 0.85);
+    box-shadow: -3px 0px 3px rgba(0, 0, 0, 0.5);
 }
 
-.close-btn, #backButton {
+.close-btn, #backButton,#showSocialButton {
     cursor: pointer;
     padding: 15px;
     display: flex;
+    filter: drop-shadow(3px 3px 1px rgba(0,0,0,0.7));
+    color: #fff;
   }
+
+#backButton:hover, .close-btn:hover,#showSocialButton:hover {
+    color:#999;
+    filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.8));
+}
 
 .info-box h1 {
     font-size: 26px;
     display: fixed;
-    text-shadow: 1px 2px 1px rgba(0,0,0,0.69);
+    text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.69);
     letter-spacing: -0.4px;
     margin-bottom: 10%;
 }
@@ -126,10 +145,6 @@ body {
 
 
 
-.author-box {
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-}
 
 button {
     outline: 0; /* Убирает обводку при фокусе */
@@ -185,17 +200,12 @@ button {
 
 #showSocialButton{
     position: absolute;
-
     top: -10px; 
     left: 0;
     outline: 0; /* Убирает обводку при фокусе */
     font-size: 9px; /* Уменьшаем размер шрифта */
     min-width: 10px;
-
-
-
     cursor: pointer;
-
     display: inline-block; /* Делаем кнопку строчно-блочным элементом */
     text-decoration: none; /* Убираем подчёркивание текста */
     text-transform: uppercase; /* Делаем текст заглавными буквами */
@@ -325,25 +335,29 @@ button {
     transform: translateX(3px);
 }
 
-/* Фиксированная шапка */
 .social-tab-header {
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: center;
-    color: #fff;
-
-    text-shadow: 1px 1px 3px  #000;
     padding-bottom: 5px;
-    margin-bottom: 5%;
-    min-height: 10%;
-
-    border-bottom: 3px solid rgb(155, 155, 155,0.2);
+    border-radius: 100% 100% 100% 100%;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0px 2px 4px #000000;
+    transition: backdrop-filter 2.3s ease, background-color 1.7s ease;
   }
 
+
+
+.social-tab-header.blurred {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background-color: rgba(255, 255, 255, 0.1); /* для лучшей читаемости */
+}
 
 
 #loader {

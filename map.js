@@ -167,11 +167,12 @@ canvas.addEventListener("contextmenu", (event) => {
     authorBox.style.top = `${event.pageY + 10}px`;
 });
 
-document.addEventListener("click", () => {
+document.addEventListener("mousemove", () => {
     authorBox.style.display = "none";
 });
 
 themeButton.addEventListener("click", () => {
+    
     darkMode = !darkMode;
     clearMap();
     document.body.style.backgroundColor = darkMode ? "#E7EAEF" : "white";
@@ -179,23 +180,30 @@ themeButton.addEventListener("click", () => {
     changeIconColor();
     document.body.classList.toggle('dark-mode', darkMode);
     if (darkMode){
-        
         drawMap("map/GeoJSON/Komi.geojson", "#10133a", "#D08821", 1); // Цвет для темной темы
-        loadDistrictMaps(colorSchemeNight);
+        loadDistrictMaps(getClosestDistrict(), colorSchemeNight);
         spinner.classList.add('dark');
     }
     else {
         
         drawMap("map/GeoJSON/Komi.geojson", "#37745B", "#8B9D77", 1);// Цвет для светлой темы
-        loadDistrictMaps(colorSchemeDay);
+        loadDistrictMaps(getClosestDistrict(), colorSchemeDay);
         spinner.classList.remove('dark');
     }
     infoBox.style.display = "none";
-    
+    applyBoxShadows();
     updateIconButtonStyles();
     updateButtonStyles(); // Вызываем обновление стилей кнопок
 });
 
+function applyBoxShadows() {
+  document.querySelectorAll(".tooltip, .author-box").forEach(el => {
+    el.style.boxShadow = darkMode
+      ? "inset 4px 0px rgba(255, 167, 43, 0.67)"
+      : "inset 4px 0px #EDC5AB";
+    el.style.backgroundColor = darkMode ? 'rgba(0,0,0,0.7)' : '#333';
+  });
+}
 
 function createMapControls(mapType) {
     mapType.forEach((type, index) => {
@@ -257,6 +265,8 @@ function setButtonState(type, index, state) {
 
 
 function updateIconButtonStyles() {
+
+    
     const iconSize = 60;
     const scale = iconSize / 48;
 
@@ -396,7 +406,7 @@ async function loadDistrictMaps(district, colorScheme) {
         const cacheKey = `${district}${type}`;
         if (!cachedData[cacheKey]) {
             try {
-                const response = await fetch(`../map/GeoJSON/${district}/${district}${type}.geojson`);
+                const response = await fetch(`map/GeoJSON/${district}/${district}${type}.geojson`);
                 if (!response.ok) throw new Error(`Ошибка загрузки ${cacheKey}`);
                 cachedData[cacheKey] = await response.json();
             } catch (e) {
@@ -728,7 +738,7 @@ function addRiverLabel(feature) {
 
 
 function capitalizeFirstLetter(str) {
-    if (!str || typeof str !== "string") return "Нет Данных";
+    if (!str || typeof str !== "string") return "Нет данных";
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
@@ -793,8 +803,11 @@ canvas.addEventListener("mousemove", (event) => {
 
 async function fetchWikiData(wikidataID) {
     infoBox.innerHTML = `
+    <div style="position: relative; padding: 10px;">
+    ${closeButton}
     <div style="padding: 20px; text-align: center;">
         <strong>Загрузка данных...</strong>
+    </div>
     </div>
     `;
     infoBox.style.display = "block";
@@ -878,17 +891,24 @@ let availableMetrics = new Set();
 let currentTitle = '';
 let currentFileName = '';
 let socialToggle = '';
+let availableFilesForRegion = [];
 
-// Функция для получения списка CSV файлов
 async function getAvailableFiles() {
     try {
         
         const mockFiles = [
-            "Образование.csv",
-            "Охрана_окружающей_среды.csv",
-            "Коллективные_средства_размещения.csv",
-            "Организация_охраны_общественного_порядка.csv"
+        "Образование", "Жильё", "Платные_услуги_населению", "Население",
+        "Охрана_окружающей_среды", "Коллективные_средства_размещения", 
+        "Организация_охраны_общественного_порядка", "Муниципальная_собственность",
+        "Финансовая_деятельность", "Жилые_Помещения", "Бюджет",
+        "Почтовая_и_телефонная_связь", "Сельское_хозяйство", 
+        "Занятость_и_зарплата", "Культура", "Спорт", "Территория"
         ];
+
+        if (availableFilesForRegion.length > 0) {
+            return availableFilesForRegion;
+        }
+
         return mockFiles;
         
     } catch (error) {
@@ -897,43 +917,76 @@ async function getAvailableFiles() {
     }
 }
 
-// Функция для отображения списка файлов в socialTab
+async function findFilesContainingRegionName(regionName) {
+    availableFilesForRegion = [];
+
+    const files = await getAvailableFiles(); // все mock-файлы
+    
+    for (const file of files) {
+        const filePath = `data/sorted/${file}.json`;
+        try {
+            const response = await fetch(filePath);
+            if (!response.ok) continue;
+
+            const data = await response.json();
+
+            // ❗️временная подмена глобального regionsData
+            const oldRegionsData = regionsData;
+            regionsData = data;
+
+            const regionData = findRegionData(regionName);
+
+            // ❗️если данные найдены — файл подходит
+            if (regionData) {
+                if (!availableFilesForRegion.includes(file)) {
+                    availableFilesForRegion.push(file);
+                }
+            }
+
+            regionsData = oldRegionsData; // восстановить
+        } catch (err) {
+            console.error(`Ошибка чтения файла ${filePath}:`, err);
+        }
+    }
+}
+
+
 async function showFileListInSocialTab() {
     const socialContent = document.getElementById('socialContent');
     socialContent.innerHTML = '<div>Загрузка списка файлов...</div>';
-    
+
     try {
-        const files = await getAvailableFiles();
         
+        const files = availableFilesForRegion.length > 0 ? availableFilesForRegion : [];
+
         if (files.length === 0) {
-            socialContent.innerHTML = '<div>Нет доступных файлов данных</div>';
-            return;
+            socialContent.innerHTML = `
+                <div>Нет данных для <strong>${currentTitle}</strong></div>
+            `;
+        } else {
+            socialContent.innerHTML = `
+                <h3>Доступные показатели для <strong>${currentTitle}</strong></h3>
+                <div class="file-list">
+                    ${files.map(file => `
+                        <div class="file-item" data-file="${file}">
+                            ${file.replace(/_/g, ' ')}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
         }
-        
-        socialContent.innerHTML = `
-            <h3>Выберите тип показателей:</h3>
-            <div class="file-list">
-                ${files.map(file => `
-                    <div class="file-item" data-file="${file}">
-                        ${file.replace(/_/g, ' ').replace('.csv', '')}
-                    </div>
-                `).join('')}
-            </div> 
-        `;
-        
-        // Обработчики клика на файлы
+
         document.querySelectorAll('.file-item').forEach(item => {
             item.addEventListener('click', async () => {
                 currentFileName = item.getAttribute('data-file');
-                const cleanTitle = currentFileName.replace('.csv', '').replace(/_/g, ' ');
-              
-                 // Обновляем заголовок
+                const cleanTitle = currentFileName.replace(/_/g, ' ');
+
                 const titleElement = document.querySelector('.social-tab-header h2');
                 if (titleElement) {
-                  titleElement.textContent = cleanTitle;
+                    titleElement.textContent = cleanTitle;
                 }
+
                 if (await loadRegionsData()) {
-                    // После загрузки файла показываем стандартный интерфейс
                     if (currentTitle) {
                         showSocialIndicators(currentTitle);
                     } else {
@@ -944,16 +997,17 @@ async function showFileListInSocialTab() {
                 }
             });
         });
-        
+
     } catch (error) {
         socialContent.innerHTML = `<div class="error">Ошибка: ${error.message}</div>`;
     }
 }
+
 async function loadRegionsData() {
     if (!currentFileName) return false;
     
     try {
-        const response = await fetch(`data/sorted/${currentFileName.replace('.csv', '.json')}`);
+        const response = await fetch(`data/sorted/${currentFileName}.json`);
         if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
         
         regionsData = await response.json();
@@ -997,7 +1051,8 @@ function findRegionData(regionName) {
         'ухта': ['Муниципальный округ Ухта','Городской округ Ухта'],
         'инта': ['Муниципальный округ Инта','Городской округ Инта'],
         'воркута': ['Муниципальный округ Воркута','Городской округ Воркута'],
-        'вуктыл': ['Муниципальный округ Вуктыл','Муниципальный район Вуктыл','Городской округ Вуктыл']
+        'вуктыл': ['Муниципальный округ Вуктыл','Муниципальный район Вуктыл','Городской округ Вуктыл'],
+        'койгородский' : ['Муниципальный район Койгородский']
     };
 
     // Проверка специальных случаев
@@ -1030,26 +1085,33 @@ function findRegionData(regionName) {
 
 // Цвета для графиков в светлой теме 
 const chartColorsLight = [
-    '#37745B', // темно-зеленый
+    '#1EBC61', // зелёный
     '#D08821', // золотистый
     '#5092DC', // голубой
-    '#90677A', // бордовый
-    '#8B9D77', // оливковый
-    '#6F9EB2', // морская волна
-    '#355743', // глубокий зеленый
-    '#6F9EB2',
-    '#8B9D77'
+    '#C0392B', // бордовый
+    '#B9C900', // оливковый
+    '#48C9B0', // морская волна
+    '#779985', // глубокий зелёный
+    '#9FAEE2', // лавандовый
+    '#ABBD97', // светлый оливковый
+    '#F39C12', // оранжево-жёлтый
+    '#BB8FCE', // сиреневый
+    '#E74C3C'  // красный
 ];
 
-// Цвета для графиков в темной теме 
 const chartColorsDark = [
-    '#D08821', // Основной золотистый акцент
-    '#9DA4D1', // Лавандовый
-    '#5092DC', // Контрастный голубой
-    '#E3A857', // Светлый золотистый
-    '#6F9EB2', // Морская волна
-    '#666aaa', // Лавандовый светлый
-    '#9b5a4b' // Красный тусклый
+    '#F5A623', // золотисто-оранжевый
+    '#8A94E3', // лавандовый
+    '#3498DB', // голубой
+    '#F0B45C', // светло-золотистый
+    '#5DA7C0', // морская волна
+    '#7A7FDB', // светло-лавандовый
+    '#C26B5E', // кирпичный
+    '#27AE60', // зелёный
+    '#E74C3C', // красный
+    '#AF7AC5', // фиолетовый
+    '#F39C12', // оранжево-жёлтый
+    '#1ABC9C'  // бирюзовый
 ];
 
 function getChartColors() {
@@ -1061,9 +1123,9 @@ async function showSocialIndicators(regionName) {
     const backButton = document.getElementById('backButton');
     const titleElement = document.querySelector('.social-tab-header h2');
     if (titleElement) {
-      titleElement.textContent = `${currentFileName.replace('.csv', '').replace(/_/g, ' ')}`;
+      titleElement.textContent = `${currentFileName.replace(/_/g, ' ')}`;
     }
-    backButton.style.display = 'block';
+    backButton.style.visibility = 'visible';
     socialContent.innerHTML = '<div>Загрузка данных...</div>';
     
     try {
@@ -1145,6 +1207,16 @@ async function showSocialIndicators(regionName) {
                 console.warn(`Нет данных для показателя: ${metric}`);
                 return;
               }
+            Chart.register({
+              id: 'background',
+              beforeDraw: (chart) => {
+                const { ctx, width, height } = chart;
+                ctx.save();
+                ctx.fillStyle = 'rgba(55, 55, 55, 0.15)'; // тёмный фон
+                ctx.fillRect(0, 0, width, height);
+                ctx.restore();
+              }
+            });
             new Chart(ctx.getContext('2d'), {
                 type: 'line',
                 data: {
@@ -1172,9 +1244,14 @@ async function showSocialIndicators(regionName) {
                     plugins: {
                         legend: { display: false },
                         tooltip: {
+                            backgroundColor: '#333',
+                            
                             callbacks: {
                                 label: (context) => context.raw
                             }
+                        },
+                        background: {
+                            color: '#ffa' // тёмный фон внутри canvas
                         }
                     },
                     scales: {
@@ -1187,8 +1264,12 @@ async function showSocialIndicators(regionName) {
                             grid: { color: 'rgba(255,255,255,0.1)' },
                             // Автоматическое определение границ
                             beginAtZero: false,
-                            min: Math.floor((Math.min(...dataValues)-(0.00001)) * 0.5),
-                            max: Math.ceil((Math.max(...dataValues)+(0.00001)) * 1.5)
+                            min: Math.floor(Math.min(...dataValues)) > 0 
+                            ? Math.floor(Math.min(...dataValues) * 0.5 - 0.00001 ) 
+                            : Math.floor(Math.min(...dataValues) * 1.5 - 0.00001 ),
+                            max: Math.ceil(Math.max(...dataValues)) >= 0
+                            ? Math.ceil((Math.max(...dataValues) * 1.5 + 0.00001) )
+                            : Math.ceil((Math.max(...dataValues) * 0.5 + 0.00001) )
                         }
                     }
                 }
@@ -1209,6 +1290,16 @@ async function showSocialIndicators(regionName) {
         } else {
             socialContent.innerHTML = `<p class="error-message">Данные для региона "${regionName}" не найдены</p>`;
         }
+        const header = document.querySelector('.social-tab-header');
+        const scrollContainer = document.getElementById('socialTab');
+        
+        scrollContainer.addEventListener('scroll', () => {
+            const isScrolling = scrollContainer.scrollTop > 3;
+            header.style.backdropFilter = isScrolling ? 'blur(2px)' : 'none';
+
+            header.style.webkitBackdropFilter = isScrolling ? 'blur(1px)' : 'none';
+        })
+
     } catch (error) {
         console.error('Ошибка:', error);
         socialContent.innerHTML = `
@@ -1218,11 +1309,21 @@ async function showSocialIndicators(regionName) {
     }
 }
 
+let closeButton = `
+        <div class="close-btn", style="position: absolute; top: -15px; right: -5px; border-radius: 50%; padding: 5px;" onclick="closeInfoBox()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="black" d="M6 6L18 18M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+        </div>`;
+
 async function updateInfoBoxWiki(entity, wikidataID) {
 
     
     let labels = entity.labels || {};
-    currentTitle = capitalizeFirstLetter(hoveredFeature.properties.Name);
+    const clickedTitle = capitalizeFirstLetter(hoveredFeature.properties.Name);
+    if (clickedTitle && clickedTitle !== "Нет данных") {
+        currentTitle = clickedTitle;
+    }
     let sitelinks = entity.sitelinks || {};
     let claims = entity.claims || {};
 
@@ -1250,22 +1351,17 @@ async function updateInfoBoxWiki(entity, wikidataID) {
     let instanceOfTitle = instanceOfID ? await fetchEntityLabel(instanceOfID) : null;
     let capitalOfTitle = capitalOfID ? await fetchEntityLabel(capitalOfID) : null;
 
-    // SVG для крестика закрытия
-    let closeButton = `
-        <div style="position: absolute; top: -15px; right: -5px; cursor: pointer; background: none; border-radius: 50%; padding: 5px;" onclick="closeInfoBox()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="black" d="M6 6L18 18M6 18L18 6" stroke="white" stroke-width="2" stroke-linecap="round" />
-            </svg>
-        </div>`;
+    
     
 
         
     // Создаем основное содержимое
     mainContent = `
         <div style="position: relative; padding: 10px;">
-            <div id="showSocialButton", style="position: absolute; top: -12px; left: -15px; cursor: pointer; background: none; border-radius: 50%; padding: 5px;"">
-                <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                    <image href="map/SVG/SocialButton.svg" width="48" height="20"/>
+            <div id="showSocialButton", style="position: absolute; top: -12px; left: 0px; cursor: pointer; background: none; border-radius: 50%; padding: 5px;"">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-opacity="1">
+                    <path style="fill:none;" d="M1.7,1.1V21.65H22" />
+                    <path style="fill:none;" d="M1.7,21.56L5.76,10.94L9.59,17.28L12.74,6.89L17.36,13.9L21.67,1.23" />
                 </svg>
             </div>
             <br>
@@ -1297,23 +1393,18 @@ async function updateInfoBoxWiki(entity, wikidataID) {
     if (!socialTab) {
         socialTab = document.createElement('div');
         socialTab.id = 'socialTab';
-        socialTab.style.position = 'fixed';
-        socialTab.style.right = '0%';
-        socialTab.style.zIndex = '1000';
-        socialTab.style.maxWidth = '40%';
-        socialTab.style.maxHeight = '100%';
         
         socialTab.innerHTML = `
         <div class="social-tab-header">
-          <div id="backButton" style="cursor: pointer; display: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <div id="backButton" style="cursor: pointer; visibility: hidden;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
           </div>
           <h2 style="margin: 0">Социальные показатели</h2>
           <div class="close-btn" onclick="toggleSocialButton()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
@@ -1327,14 +1418,25 @@ async function updateInfoBoxWiki(entity, wikidataID) {
     if (!currentFileName) {
         showFileListInSocialTab();
     }
+
+  
+
     
+
      // Обработчик кнопки "Назад"
-     document.getElementById('backButton')?.addEventListener('click', () => {
+     document.getElementById('backButton')?.addEventListener('click', async () => {
         currentFileName = '';
+        availableFilesForRegion = [];
+        
+        if (currentTitle) {
+            await findFilesContainingRegionName(currentTitle);
+        }
+
         const titleElement = document.querySelector('.social-tab-header h2');
         if (titleElement) {
           titleElement.textContent = 'Социальные показатели'; // Возвращаем исходный заголовок
         }
+        document.getElementById('backButton').style.visibility = 'hidden';
         showFileListInSocialTab();
     });
 
@@ -1351,17 +1453,24 @@ async function updateInfoBoxWiki(entity, wikidataID) {
     });
 }
 
+
+
+
 function toggleSocialButton(){
     const socialTab = document.getElementById('socialTab');
     const b = document.getElementById('showSocialButton');
     socialToggle = !socialToggle;
     socialTab.style.display = socialToggle ? 'block' : 'none';
-    b.innerHTML = `<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                    <image href="map/SVG/SocialButton${socialToggle ? 'Close' : ''}.svg" width="48" height="20"/>
+    b.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-opacity="1">
+                    <path d="M1.7,1.1V21.65H22" />
+                    <path d="M1.7,21.56L5.76,10.94L9.59,17.28L12.74,6.89L17.36,13.9L21.67,1.23" />
+                    ${socialToggle ? `<path d="M1.43,22.66L22.62,1.36" stroke="#6d0000" stroke-width="4" /><path d="M22.62,1.36L1.43,22.66" transform="matrix(-1 0 0 1 24.05 0)" stroke="#6d0000" stroke-width="4" />`: ''}
                 </svg>`
 }
 
-canvas.addEventListener("click", () => {
+
+
+canvas.addEventListener("click", async () => {
     document.body.style.cursor = "grab";
     if (hoveredFeature) {
         if (zoomTransform.k <= 11) {
@@ -1383,10 +1492,12 @@ canvas.addEventListener("click", () => {
             }
         }
         
-    
+        
         if (!currentFileName) {
+            await findFilesContainingRegionName(currentTitle);
             showFileListInSocialTab();
-        } else if (currentTitle) {
+        }
+        else if (currentTitle) {
             showSocialIndicators(currentTitle);
         }
     
@@ -1400,6 +1511,8 @@ canvas.addEventListener("click", () => {
 function closeInfoBox() {
     infoBox.style.display = "none";
 }
+
+
 
 const zoom = d3.zoom()
     .scaleExtent([1, 10000])
